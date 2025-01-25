@@ -1,97 +1,95 @@
-Traffic Sign Detection
-Traffic Sign Detection est un projet de détection des panneaux de signalisation à l'aide d'un modèle de deep learning. Ce projet utilise un modèle pré-entraîné basé sur TensorFlow et OpenCV pour détecter et classer différents types de panneaux de signalisation en temps réel.
 
-Table des matières
-Aperçu du projet
-Fonctionnalités
-Prérequis
-Installation
-Utilisation
-Structure du projet
-Contributions
-License
-Aperçu du projet
-Ce projet a été conçu pour détecter les panneaux de signalisation dans des images ou des vidéos. Il utilise OpenCV pour le traitement des images et TensorFlow pour appliquer le modèle de détection des panneaux. L'objectif est d'automatiser le processus de reconnaissance des panneaux dans un contexte de conduite autonome ou d'assistance à la conduite.
 
-Le modèle utilisé est un CNN (Convolutional Neural Network) pré-entraîné sur le dataset GTSRB (German Traffic Sign Recognition Benchmark). Ce dataset contient des images de panneaux de signalisation dans divers environnements, ce qui permet d'obtenir une détection fiable dans des conditions variées.
+# Traffic Sign Recognition with TensorFlow
 
-Fonctionnalités
-Détection en temps réel des panneaux de signalisation à partir d'une image ou d'une vidéo.
-Classification des panneaux détectés en fonction de leur type (par exemple, stop, limitation de vitesse, etc.).
-Interface graphique pour afficher les panneaux détectés sur l'image d'entrée.
-Possibilité de tester avec des images locales ou des flux vidéo en temps réel à partir de la webcam.
-Prérequis
-Avant de commencer, assurez-vous que votre environnement répond aux exigences suivantes :
+## Overview
+Ce projet implémente un réseau de neurones en utilisant TensorFlow pour classifier des images de panneaux de signalisation à partir du **German Traffic Sign Recognition Benchmark (GTSRB)**. Le modèle identifie avec précision différents types de panneaux de signalisation, tels que les panneaux d'arrêt, les limites de vitesse, et les panneaux de céder le passage, entre autres.
 
-Python 3.x
-TensorFlow 2.x
-OpenCV
-Numpy
-Matplotlib (pour visualisation)
-Bibliothèques requises
-Les bibliothèques nécessaires peuvent être installées avec pip :
+## Getting Started
 
-bash
-Copier
-Modifier
-pip install tensorflow opencv-python numpy matplotlib
-Installation
-Clonez ce dépôt sur votre machine locale :
+Pour commencer, assurez-vous d'avoir **Python 3.10.8** installé, car cette version est recommandée pour la compatibilité avec TensorFlow.
 
-bash
-Copier
-Modifier
-git clone https://github.com/Helmisoudana/Traffic-Sign-Detection.git
-Accédez au répertoire du projet :
+### Prérequis
 
-bash
-Copier
-Modifier
-cd Traffic-Sign-Detection
-Installez les dépendances via pip :
+- **Python** (version 3.10.8 recommandée)
+- **Git** installé pour cloner le dépôt.
 
-bash
-Copier
-Modifier
+### 1. Cloner le dépôt
+
+```bash
+git clone https://github.com/Helmisoudana/TrafficSignDetection
+cd TrafficSignDetection
+```
+
+### 2. Télécharger le dataset
+
+Téléchargez le dataset du projet à partir du lien suivant et placez-le dans ce répertoire :
+
+[Dataset GTSRB - Google Drive](https://drive.google.com/file/d/1Tzw4hHHRIhkJpCeFye5kafD_Go7A4vNv/view)
+
+### 3. Créer un environnement virtuel
+
+Créez un environnement virtuel pour isoler les dépendances du projet :
+
+Sous Windows :
+```bash
+python -m venv env
+env\Scripts\activate
+```
+
+### 4. Installer les dépendances
+
+Dans le répertoire du projet, exécutez la commande suivante pour installer toutes les dépendances nécessaires (comme OpenCV-Python, scikit-learn et TensorFlow) :
+
+```bash
 pip install -r requirements.txt
-Si le fichier requirements.txt n'existe pas encore, vous pouvez installer manuellement les bibliothèques avec les commandes mentionnées plus haut.
+```
 
-Téléchargez le modèle pré-entraîné (si ce n'est pas déjà inclus dans le dépôt) et placez-le dans le répertoire approprié.
+### 5. Exécuter le programme
 
-Utilisation
-Exécution avec une image locale
-Pour tester la détection sur une image locale, exécutez le script suivant :
+Une fois les dépendances installées, vous pouvez lancer les scripts suivants pour entraîner le modèle, prédire les panneaux de signalisation, ou utiliser la caméra pour la détection :
 
-bash
-Copier
-Modifier
-python detect_traffic_sign.py --image <chemin-vers-l-image>
-Cela ouvrira une fenêtre avec l'image affichant les panneaux détectés.
+- Entraîner le modèle :
+  ```bash
+  python train.py
+  ```
 
-Exécution avec la webcam
-Pour tester la détection en temps réel avec votre webcam, utilisez :
+- Faire des prédictions :
+  ```bash
+  python predict.py
+  ```
 
-bash
-Copier
-Modifier
-python detect_traffic_sign.py --webcam
-Cela activera votre caméra et affichera les résultats en temps réel.
+- Utiliser la webcam pour la détection :
+  ```bash
+  python cvcam.py
+  ```
 
-Arguments
---image <chemin-vers-l-image> : Spécifie le chemin d'une image locale à tester.
---webcam : Active la détection en temps réel avec la webcam.
+## Implementation Details
 
-detect_traffic_sign.py : Le script qui effectue la détection en temps réel ou sur des images locales.
-model/traffic_sign_model.h5 : Le modèle de deep learning pré-entraîné.
-utils.py : Contient les fonctions pour charger les images, traiter les résultats et afficher les résultats.
-Contributions
-Si vous souhaitez contribuer à ce projet, vous pouvez suivre ces étapes :
+### `train.py`
 
-Fork ce dépôt.
-Créez une branche pour votre fonctionnalité (git checkout -b feature/ma-fonctionnalité).
-Commitez vos modifications (git commit -am 'Ajout de ma fonctionnalité').
-Poussez votre branche (git push origin feature/ma-fonctionnalité).
-Ouvrez une Pull Request pour discuter des modifications.
-License
-Ce projet est sous la MIT License. Voir le fichier LICENSE pour plus de détails.
+Le cœur du projet réside dans `train.py`, où nous implémentons deux fonctions principales :
 
+1. **load_data(data_dir)** : Cette fonction charge les données d'image et les étiquettes correspondantes à partir du répertoire spécifié (`data_dir`). Chaque image est redimensionnée à une taille standard (IMG_WIDTH x IMG_HEIGHT) en utilisant OpenCV-Python (`cv2`) et convertie en tableau numpy. Elle renvoie deux listes : `images`, contenant les tableaux d'images, et `labels`, contenant la catégorie de chaque image.
+
+2. **get_model()** : Cette fonction construit et compile un modèle de réseau de neurones en utilisant l'API Keras de TensorFlow. L'architecture du modèle est personnalisable, permettant d'expérimenter avec différentes configurations de couches convolutionnelles, de pooling, de couches cachées et de taux de dropout pour optimiser l'exactitude du modèle.
+
+### Training and Evaluation
+
+Une fois les données chargées et le modèle construit, `train.py` entraîne le modèle sur l'ensemble d'entraînement et évalue ses performances sur l'ensemble de test. Les progrès de l'entraînement, y compris les métriques de perte et de précision pour chaque époque, sont affichés dans la console.
+
+## Experimentation
+
+Tout au long du projet, vous êtes encouragé à expérimenter avec différentes architectures de modèles et hyperparamètres. Vous pouvez modifier la fonction `get_model()` pour explorer :
+
+- Différents nombres de couches convolutionnelles et de pooling.
+- La taille et le nombre de filtres dans les couches convolutionnelles.
+- Diverses configurations de couches cachées et de taux de dropout.
+
+## Contribuer
+
+Si vous souhaitez contribuer à ce projet, merci de faire un fork du dépôt et de soumettre une pull request.
+
+---
+
+En utilisant ce guide, les utilisateurs pourront facilement configurer l'environnement virtuel, installer les dépendances et commencer à travailler avec ton projet de reconnaissance de panneaux de signalisation.
